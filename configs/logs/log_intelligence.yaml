@@ -1,0 +1,58 @@
+# Phase 10: deterministic LogHub intelligence and log evidence.
+
+families:
+  - openstack
+  - hdfs
+  - bgl
+  - hadoop
+  - spark
+  - zookeeper
+
+telemetry_evidence_run_dir: experiments/evidence/phase8b_evidence_engine_20260916
+
+# Bucket size is automatically selected from each dataset's observed coverage
+# unless overridden here. These overrides are intentionally empty so the run
+# records dataset-specific choices in profiles.csv.
+bucket_frequency_overrides: {}
+
+rare_event_max_frequency: 0.01
+rare_event_max_count: 3
+rare_event_max_occurrences_per_event: 3
+
+frequency_z_threshold: 4.0
+frequency_min_count: 5
+
+level_rate_z_threshold: 3.0
+level_rate_absolute_threshold: 0.75
+level_min_count: 5
+
+component_z_threshold: 4.0
+component_min_count: 5
+
+transition_max_frequency: 0.005
+transition_max_count: 2
+transition_max_occurrences: 3
+
+max_signals_per_detector_per_dataset: 250
+
+severity_thresholds:
+  low: 0.25
+  medium: 0.50
+  high: 0.75
+  critical: 0.90
+
+# Log evidence is intentionally low-weight so it cannot dominate risk scoring
+# before it has production calibration.
+log_signal_type_weights:
+  LOG_RARE_EVENT: 0.25
+  LOG_FREQUENCY_ANOMALY: 0.45
+  LOG_LEVEL_ANOMALY: 0.40
+  LOG_SEQUENCE_ANOMALY: 0.35
+  LOG_COMPONENT_ANOMALY: 0.40
+
+log_detector_reliability:
+  rare_event_detector: LOW
+  frequency_deviation_detector: LOW
+  log_level_distribution_detector: LOW
+  transition_rarity_detector: LOW
+  component_activity_detector: LOW

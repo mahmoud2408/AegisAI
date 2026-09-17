@@ -2,7 +2,7 @@
 
 Autonomous AI platform for predictive incident detection and investigation.
 
-This repository is being built as a production-oriented AI engineering portfolio project. The current state is **Phase 8 MetroPT time-series forecasting**. It contains the architecture and data layer from earlier phases plus measured NAB/SMD anomaly-detection experiments, AI4I/MetroPT failure-prediction baselines, a MetroPT robustness audit, and MetroPT forecasting baselines. API endpoints, RAG, agents, monitoring dashboards, Docker Compose, and CI/CD remain later milestones.
+This repository is being built as a production-oriented AI engineering portfolio project. The current state is **Phase 10 deterministic log intelligence and log evidence**. It contains the architecture and data layer from earlier phases plus measured NAB/SMD anomaly-detection experiments, AI4I/MetroPT failure-prediction baselines, a MetroPT robustness audit, MetroPT forecasting baselines, deterministic evidence/risk aggregation, root-cause candidate ranking, and LogHub log-evidence generation. API endpoints, RAG, agents, monitoring dashboards, Docker Compose, and CI/CD remain later milestones.
 
 ## Objective
 
@@ -39,6 +39,7 @@ Major boundaries:
 - `src/aegis_ai/features`: leakage-safe feature engineering for time-series and log-derived signals
 - `src/aegis_ai/ml`: anomaly detection, incident prediction, model evaluation, and model registry adapters
 - `src/aegis_ai/forecasting`: metric forecasting baselines and sequence models
+- `src/aegis_ai/logs`: deterministic structured-log profiling, anomaly signals, and log evidence
 - `src/aegis_ai/decision`: incident severity, risk scoring, and decision policies
 - `src/aegis_ai/rca`: deterministic and model-assisted root-cause analysis
 - `src/aegis_ai/rag`: document ingestion, chunking, embeddings, retrieval, reranking, citations, and evaluation

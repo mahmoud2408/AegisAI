@@ -38,6 +38,11 @@ class EvidenceSignalType(StrEnum):
     FAILURE_SIGNAL = "FAILURE_SIGNAL"
     STATE_TRANSITION = "STATE_TRANSITION"
     HISTORICAL_CONTEXT = "HISTORICAL_CONTEXT"
+    LOG_RARE_EVENT = "LOG_RARE_EVENT"
+    LOG_FREQUENCY_ANOMALY = "LOG_FREQUENCY_ANOMALY"
+    LOG_LEVEL_ANOMALY = "LOG_LEVEL_ANOMALY"
+    LOG_SEQUENCE_ANOMALY = "LOG_SEQUENCE_ANOMALY"
+    LOG_COMPONENT_ANOMALY = "LOG_COMPONENT_ANOMALY"
 
 
 class EvidenceSeverity(StrEnum):
@@ -204,6 +209,11 @@ class EvidenceScoringConfig:
             EvidenceSignalType.FAILURE_SIGNAL.value: 0.30,
             EvidenceSignalType.STATE_TRANSITION.value: 0.35,
             EvidenceSignalType.HISTORICAL_CONTEXT.value: 0.45,
+            EvidenceSignalType.LOG_RARE_EVENT.value: 0.25,
+            EvidenceSignalType.LOG_FREQUENCY_ANOMALY.value: 0.45,
+            EvidenceSignalType.LOG_LEVEL_ANOMALY.value: 0.40,
+            EvidenceSignalType.LOG_SEQUENCE_ANOMALY.value: 0.35,
+            EvidenceSignalType.LOG_COMPONENT_ANOMALY.value: 0.40,
         }
     )
     reliability_weights: dict[str, float] = field(
@@ -223,6 +233,36 @@ class EvidenceScoringConfig:
             "metropt:state_transition_rule": ReliabilityLevel.LOW.value,
             "metropt:historical_context_rule": ReliabilityLevel.LOW.value,
             "metropt:metropt_failure_prediction": ReliabilityLevel.RESEARCH_ONLY.value,
+            "loghub-bgl:rare_event_detector": ReliabilityLevel.LOW.value,
+            "loghub-bgl:frequency_deviation_detector": ReliabilityLevel.LOW.value,
+            "loghub-bgl:log_level_distribution_detector": ReliabilityLevel.LOW.value,
+            "loghub-bgl:transition_rarity_detector": ReliabilityLevel.LOW.value,
+            "loghub-bgl:component_activity_detector": ReliabilityLevel.LOW.value,
+            "loghub-openstack:rare_event_detector": ReliabilityLevel.LOW.value,
+            "loghub-openstack:frequency_deviation_detector": ReliabilityLevel.LOW.value,
+            "loghub-openstack:log_level_distribution_detector": ReliabilityLevel.LOW.value,
+            "loghub-openstack:transition_rarity_detector": ReliabilityLevel.LOW.value,
+            "loghub-openstack:component_activity_detector": ReliabilityLevel.LOW.value,
+            "loghub-hdfs:rare_event_detector": ReliabilityLevel.LOW.value,
+            "loghub-hdfs:frequency_deviation_detector": ReliabilityLevel.LOW.value,
+            "loghub-hdfs:log_level_distribution_detector": ReliabilityLevel.LOW.value,
+            "loghub-hdfs:transition_rarity_detector": ReliabilityLevel.LOW.value,
+            "loghub-hdfs:component_activity_detector": ReliabilityLevel.LOW.value,
+            "loghub-hadoop:rare_event_detector": ReliabilityLevel.LOW.value,
+            "loghub-hadoop:frequency_deviation_detector": ReliabilityLevel.LOW.value,
+            "loghub-hadoop:log_level_distribution_detector": ReliabilityLevel.LOW.value,
+            "loghub-hadoop:transition_rarity_detector": ReliabilityLevel.LOW.value,
+            "loghub-hadoop:component_activity_detector": ReliabilityLevel.LOW.value,
+            "loghub-spark:rare_event_detector": ReliabilityLevel.LOW.value,
+            "loghub-spark:frequency_deviation_detector": ReliabilityLevel.LOW.value,
+            "loghub-spark:log_level_distribution_detector": ReliabilityLevel.LOW.value,
+            "loghub-spark:transition_rarity_detector": ReliabilityLevel.LOW.value,
+            "loghub-spark:component_activity_detector": ReliabilityLevel.LOW.value,
+            "loghub-zookeeper:rare_event_detector": ReliabilityLevel.LOW.value,
+            "loghub-zookeeper:frequency_deviation_detector": ReliabilityLevel.LOW.value,
+            "loghub-zookeeper:log_level_distribution_detector": ReliabilityLevel.LOW.value,
+            "loghub-zookeeper:transition_rarity_detector": ReliabilityLevel.LOW.value,
+            "loghub-zookeeper:component_activity_detector": ReliabilityLevel.LOW.value,
         }
     )
 
@@ -743,7 +783,7 @@ def aggregate_evidence_signals(
     if not signals:
         return []
     frame = pd.DataFrame([signal.to_record() for signal in signals])
-    frame["timestamp"] = pd.to_datetime(frame["timestamp"], errors="raise")
+    frame["timestamp"] = pd.to_datetime(frame["timestamp"], errors="raise", format="mixed")
     frame["bucket_timestamp"] = frame["timestamp"].dt.floor(config.aggregation_frequency)
     risk_signals: list[RiskSignal] = []
     grouped = frame.groupby(["entity_id", "bucket_timestamp"], sort=True, observed=True)

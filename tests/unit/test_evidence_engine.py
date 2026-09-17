@@ -206,6 +206,33 @@ def test_aggregation_combines_weighted_evidence_and_tracks_dominant_type() -> No
     assert "not incident probability" in risk[0].explanation
 
 
+def test_aggregation_accepts_mixed_iso_timestamp_precision() -> None:
+    config = EvidenceScoringConfig()
+    signals = [
+        _signal(
+            EvidenceSignalType.CURRENT_ANOMALY,
+            "TP2",
+            0.8,
+            "train_normal_range_rule",
+            ReliabilityLevel.MEDIUM,
+            timestamp=pd.Timestamp("2020-01-01 00:00:00.123000"),
+        ),
+        _signal(
+            EvidenceSignalType.LOG_RARE_EVENT,
+            "api:E_RARE",
+            0.6,
+            "rare_event_detector",
+            ReliabilityLevel.LOW,
+            timestamp=pd.Timestamp("2020-01-01 00:00:30"),
+        ),
+    ]
+
+    risk = aggregate_evidence_signals(signals, config)
+
+    assert len(risk) == 1
+    assert risk[0].evidence_count == 2
+
+
 def test_severity_thresholds_are_configurable() -> None:
     thresholds = {"low": 0.1, "medium": 0.3, "high": 0.6, "critical": 0.9}
 

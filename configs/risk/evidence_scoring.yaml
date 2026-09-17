@@ -67,6 +67,11 @@ signal_type_weights:
   FAILURE_SIGNAL: 0.30
   STATE_TRANSITION: 0.35
   HISTORICAL_CONTEXT: 0.45
+  LOG_RARE_EVENT: 0.25
+  LOG_FREQUENCY_ANOMALY: 0.45
+  LOG_LEVEL_ANOMALY: 0.40
+  LOG_SEQUENCE_ANOMALY: 0.35
+  LOG_COMPONENT_ANOMALY: 0.40
 
 reliability_weights:
   HIGH: 1.00
@@ -82,3 +87,33 @@ source_reliability:
   metropt:state_transition_rule: LOW
   metropt:historical_context_rule: LOW
   metropt:metropt_failure_prediction: RESEARCH_ONLY
+  loghub-openstack:rare_event_detector: LOW
+  loghub-openstack:frequency_deviation_detector: LOW
+  loghub-openstack:log_level_distribution_detector: LOW
+  loghub-openstack:transition_rarity_detector: LOW
+  loghub-openstack:component_activity_detector: LOW
+  loghub-hdfs:rare_event_detector: LOW
+  loghub-hdfs:frequency_deviation_detector: LOW
+  loghub-hdfs:log_level_distribution_detector: LOW
+  loghub-hdfs:transition_rarity_detector: LOW
+  loghub-hdfs:component_activity_detector: LOW
+  loghub-hadoop:rare_event_detector: LOW
+  loghub-hadoop:frequency_deviation_detector: LOW
+  loghub-hadoop:log_level_distribution_detector: LOW
+  loghub-hadoop:transition_rarity_detector: LOW
+  loghub-hadoop:component_activity_detector: LOW
+  loghub-spark:rare_event_detector: LOW
+  loghub-spark:frequency_deviation_detector: LOW
+  loghub-spark:log_level_distribution_detector: LOW
+  loghub-spark:transition_rarity_detector: LOW
+  loghub-spark:component_activity_detector: LOW
+  loghub-zookeeper:rare_event_detector: LOW
+  loghub-zookeeper:frequency_deviation_detector: LOW
+  loghub-zookeeper:log_level_distribution_detector: LOW
+  loghub-zookeeper:transition_rarity_detector: LOW
+  loghub-zookeeper:component_activity_detector: LOW
+  loghub-bgl:rare_event_detector: LOW
+  loghub-bgl:frequency_deviation_detector: LOW
+  loghub-bgl:log_level_distribution_detector: LOW
+  loghub-bgl:transition_rarity_detector: LOW
+  loghub-bgl:component_activity_detector: LOW

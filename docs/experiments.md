@@ -303,3 +303,41 @@ Detailed write-ups:
 - `docs/experiments/metropt_forecasting.md`
 - `docs/experiments/forecast_risk_signal.md`
 - `docs/models/forecasting_baselines.md`
+
+### LogHub Deterministic Log Intelligence
+
+| Field | Value |
+| --- | --- |
+| Experiment ID | `phase10_log_intelligence_20260917` |
+| Date | 2026-09-17 |
+| Datasets | LogHub OpenStack, HDFS, BGL, Hadoop, Spark, Zookeeper |
+| Dataset version or commit | Local LogHub 2k structured samples under `data/raw/loghub`; raw datasets are not committed |
+| Methods | Rare-event, frequency-deviation, log-level, sequence-rarity, and component-activity detectors |
+| Metrics artifact | `experiments/logs/phase10_log_intelligence_20260917/metrics.json` |
+| Reproduction command | `.\.venv\Scripts\python.exe scripts\experiments\run_log_intelligence.py --run-id phase10_log_intelligence_20260917` |
+| Notes | BGL has real row labels. Other LogHub samples report structural evidence metrics only. |
+
+Measured signal counts:
+
+| Signal type | Count |
+| --- | ---: |
+| `LOG_COMPONENT_ANOMALY` | 230 |
+| `LOG_FREQUENCY_ANOMALY` | 269 |
+| `LOG_LEVEL_ANOMALY` | 36 |
+| `LOG_RARE_EVENT` | 497 |
+| `LOG_SEQUENCE_ANOMALY` | 1,107 |
+
+BGL row-label evaluation:
+
+| Precision | Recall | F1 | False alarm rate |
+| ---: | ---: | ---: | ---: |
+| 0.0713 | 0.9510 | 0.1327 | 0.9537 |
+
+The log experiment adds complementary evidence types but does not claim cross-dataset incident-diagnosis improvement.
+
+Detailed write-ups:
+
+- `docs/log_intelligence.md`
+- `docs/log_anomaly_detection.md`
+- `docs/log_evidence.md`
+- `docs/experiments/log_intelligence.md`

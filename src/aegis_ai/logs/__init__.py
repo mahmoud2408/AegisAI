@@ -1,0 +1,43 @@
+"""Structured log intelligence and log-evidence generation."""
+
+from aegis_ai.logs.intelligence import (
+    LogEvidenceSignal,
+    LogIntelligenceConfig,
+    LogIntelligenceExperimentResult,
+    aggregate_log_events,
+    build_log_evidence_signals,
+    detect_component_anomalies,
+    detect_frequency_anomalies,
+    detect_level_anomalies,
+    detect_rare_events,
+    detect_sequence_anomalies,
+    evaluate_labeled_log_signals,
+    evaluate_structural_log_signals,
+    load_log_intelligence_config,
+    load_loghub_events,
+    normalize_log_labels,
+    normalize_log_records,
+    run_log_intelligence_experiment,
+    select_bucket_frequency,
+)
+
+__all__ = [
+    "LogEvidenceSignal",
+    "LogIntelligenceConfig",
+    "LogIntelligenceExperimentResult",
+    "aggregate_log_events",
+    "build_log_evidence_signals",
+    "detect_component_anomalies",
+    "detect_frequency_anomalies",
+    "detect_level_anomalies",
+    "detect_rare_events",
+    "detect_sequence_anomalies",
+    "evaluate_labeled_log_signals",
+    "evaluate_structural_log_signals",
+    "load_log_intelligence_config",
+    "load_loghub_events",
+    "normalize_log_labels",
+    "normalize_log_records",
+    "run_log_intelligence_experiment",
+    "select_bucket_frequency",
+]
