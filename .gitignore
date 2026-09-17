@@ -28,15 +28,24 @@ frontend/dist/
 frontend/coverage/
 
 # Data and artifacts
-data/raw/*
-data/interim/*
-data/processed/*
-data/external/*
+data/raw/**
+data/interim/**
+data/processed/**
+data/external/**
+data/synthetic/**
+data/manifests/**
+!data/**/
 !data/**/.gitkeep
 !data/README.md
+!data/raw/swat/README.md
+!data/raw/wadi/README.md
+!data/raw/cicids2017/README.md
 mlruns/
 artifacts/
-models/
+/models/
+experiments/**
+!experiments/
+!experiments/.gitkeep
 *.parquet
 *.feather
 *.onnx

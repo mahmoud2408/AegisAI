@@ -1,0 +1,60 @@
+# Phase 7B: MetroPT failure prediction robustness and target validation.
+
+random_seed: 42
+
+# Chosen from the measured near-10-second raw cadence and one-minute prediction
+# stride: 0.5h tests immediate precursors, 2h tests short operational warning,
+# and 6h preserves the Phase 7 medium-horizon baseline.
+horizons_hours:
+  - 0.5
+  - 2.0
+  - 6.0
+
+prediction_stride_rows: 6
+
+# Event-aware chronological split:
+# train sees failures #1 and #2, validation sees #3, test sees #4.
+train_end: "2020-05-31 00:00:00"
+validation_end: "2020-06-08 00:00:00"
+
+lag_steps:
+  - 1
+  - 6
+  - 60
+
+rolling_windows:
+  - 5min
+  - 30min
+
+trend_window: 30min
+state_transition_count_window: 30min
+min_periods: 3
+max_train_rows: 60000
+negative_to_positive_ratio: 25
+
+# Includes low thresholds because the Phase 7 validation probabilities were
+# poorly calibrated for rare events. Selection still uses validation only.
+threshold_grid:
+  - 0.005
+  - 0.01
+  - 0.02
+  - 0.05
+  - 0.1
+  - 0.2
+  - 0.3
+  - 0.5
+
+models:
+  random_seed: 42
+  logistic_max_iter: 1000
+  random_forest_estimators: 200
+  random_forest_min_samples_leaf: 3
+  xgboost_estimators: 200
+  xgboost_max_depth: 4
+  xgboost_learning_rate: 0.05
+  n_jobs: -1
+
+shap:
+  enabled: true
+  sample_rows: 200
+  local_explanation_rows: 5

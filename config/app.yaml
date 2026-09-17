@@ -1,0 +1,25 @@
+app:
+  name: AegisAI
+  phase: data-engineering-bootstrap
+  environment: local
+
+data:
+  raw_dir: data/raw
+  interim_dir: data/interim
+  processed_dir: data/processed
+  synthetic_dir: data/synthetic
+  manifest_dir: data/manifests
+  manifest_file: data/manifests/datasets_manifest.json
+  preserve_raw_data: true
+
+downloads:
+  default_selection: public
+  allow_large_by_default: false
+  max_default_dataset_size_mb: 1024
+  retries: 3
+  timeout_seconds: 60
+  user_agent: AegisAI-dataset-bootstrap/0.1
+
+validation:
+  fail_on_missing_public_data: true
+  fail_on_manual_access_missing: false

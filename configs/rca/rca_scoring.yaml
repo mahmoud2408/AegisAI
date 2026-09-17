@@ -1,0 +1,73 @@
+# Phase 9: deterministic incident grouping and RCA candidate ranking.
+
+evidence_run_dir: experiments/evidence/phase8b_evidence_engine_20260916
+entity_id: metropt_compressor
+aggregation_frequency: 5min
+
+# Incident windowing. Risk/severity come from Phase 8B; this layer only groups
+# related buckets and preserves the original evidence.
+min_risk_threshold: 0.80
+min_bucket_evidence_count: 6
+min_window_evidence_count: 8
+min_persistence_minutes: 5
+critical_single_bucket_threshold: 0.80
+max_gap_minutes: 15
+
+# Adjacent windows are merged only when they involve the same entity and their
+# observed metric/evidence patterns overlap enough.
+merge_gap_minutes: 20
+merge_pattern_jaccard_threshold: 0.25
+
+persistence_cap_minutes: 60
+temporal_precedence_reference: peak_risk
+signal_count_cap: 12
+multi_signal_type_cap: 4
+top_candidates_per_incident: 8
+max_evidence_per_candidate: 12
+case_study_pre_failure_hours: 6
+
+candidate_feature_weights:
+  magnitude: 0.24
+  persistence: 0.16
+  signal_count: 0.12
+  multi_signal_support: 0.14
+  forecast_deviation: 0.10
+  trend_strength: 0.08
+  state_transition: 0.04
+  temporal_precedence: 0.06
+  historical_recurrence: 0.04
+  confidence: 0.02
+
+signal_type_role_weights:
+  CURRENT_ANOMALY: 1.00
+  FORECAST_DEVIATION: 0.95
+  TREND: 0.75
+  HISTORICAL_CONTEXT: 0.55
+  STATE_TRANSITION: 0.45
+  FAILURE_SIGNAL: 0.20
+
+# Entity-level candidates provide affected-machine context, but metric/component
+# candidates should remain prominent when their direct evidence is stronger.
+candidate_type_weights:
+  metric: 1.00
+  component: 0.95
+  entity: 0.75
+
+# This is an observed MetroPT sensor/component grouping, not a fabricated service
+# dependency graph. Service relationships remain empty unless a dataset supplies them.
+metric_component_map:
+  TP2: compressor_pressure_path
+  TP3: compressor_pressure_path
+  H1: compressor_pressure_path
+  Reservoirs: air_reservoir_system
+  Oil_temperature: lubrication_thermal_system
+  Motor_current: motor_electrical_system
+  COMP: operating_state_control
+  DV_eletric: operating_state_control
+  Towers: operating_state_control
+  MPG: operating_state_control
+  LPS: operating_state_control
+  Pressure_switch: operating_state_control
+  Oil_level: lubrication_thermal_system
+  Caudal_impulses: air_flow_signal
+  failure_prediction_probability: research_failure_signal

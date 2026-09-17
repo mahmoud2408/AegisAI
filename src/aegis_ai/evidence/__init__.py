@@ -1,0 +1,41 @@
+"""Evidence extraction and deterministic risk signal aggregation."""
+
+from aegis_ai.evidence.engine import (
+    EvidenceEngineExperimentResult,
+    EvidenceScoringConfig,
+    EvidenceSeverity,
+    EvidenceSignal,
+    EvidenceSignalType,
+    EvidenceValidity,
+    ReliabilityLevel,
+    RiskSignal,
+    aggregate_evidence_signals,
+    build_current_anomaly_signals,
+    build_forecast_deviation_signals,
+    build_historical_context_signals,
+    build_research_failure_signals,
+    build_state_transition_signals,
+    build_trend_signals,
+    load_evidence_scoring_config,
+    run_evidence_engine_experiment,
+)
+
+__all__ = [
+    "EvidenceEngineExperimentResult",
+    "EvidenceScoringConfig",
+    "EvidenceSeverity",
+    "EvidenceSignal",
+    "EvidenceSignalType",
+    "EvidenceValidity",
+    "ReliabilityLevel",
+    "RiskSignal",
+    "aggregate_evidence_signals",
+    "build_current_anomaly_signals",
+    "build_forecast_deviation_signals",
+    "build_historical_context_signals",
+    "build_research_failure_signals",
+    "build_state_transition_signals",
+    "build_trend_signals",
+    "load_evidence_scoring_config",
+    "run_evidence_engine_experiment",
+]

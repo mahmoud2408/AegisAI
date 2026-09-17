@@ -1,0 +1,303 @@
+datasets:
+  - id: nab
+    name: Numenta Anomaly Benchmark
+    category: univariate_time_series_anomaly_detection
+    description: Labeled real-world and artificial streaming time-series benchmark for anomaly detection.
+    official_source: https://github.com/numenta/NAB
+    download_method: github_tree
+    download_url: https://github.com/numenta/NAB
+    destination: data/raw/nab
+    expected_files:
+      - data/realAWSCloudwatch/ec2_cpu_utilization_24ae8d.csv
+      - labels/combined_windows.json
+    requires_manual_access: false
+    safe_default: true
+    large: false
+    license: MIT license in the upstream repository.
+    notes: Downloads only the upstream data, labels, README, and license files; raw data is not transformed.
+    aliases:
+      - numenta
+
+  - id: smd
+    name: Server Machine Dataset
+    category: multivariate_time_series_anomaly_detection
+    description: Multivariate server telemetry dataset distributed with OmniAnomaly.
+    official_source: https://github.com/das2ar/OmniAnomaly
+    download_method: github_tree
+    download_url: https://github.com/das2ar/OmniAnomaly/tree/master/ServerMachineDataset
+    destination: data/raw/smd
+    expected_files:
+      - train/*.txt
+      - test/*.txt
+      - test_label/*.txt
+    requires_manual_access: false
+    safe_default: true
+    large: false
+    license: To verify from upstream repository and original SMD publication.
+    notes: Preserves train, test, test_label, interpretation_label, and LICENSE from ServerMachineDataset.
+    aliases:
+      - server-machine-dataset
+
+  - id: smap-msl
+    name: SMAP and MSL Telemanom Bundle
+    category: multivariate_spacecraft_telemetry_anomaly_detection
+    description: NASA SMAP satellite and MSL rover telemetry anomaly data used by Telemanom.
+    official_source: https://github.com/khundman/telemanom
+    download_method: direct_archive
+    download_url: https://s3-us-west-2.amazonaws.com/telemanom/data.zip
+    destination: data/raw/smap_msl
+    expected_files:
+      - data.zip
+      - labeled_anomalies.csv
+    requires_manual_access: false
+    safe_default: true
+    large: false
+    license: To verify from Telemanom and original data providers.
+    notes: The label CSV is downloaded from the Telemanom GitHub repository. If the historical S3 archive is unavailable, validation will report the data bundle as incomplete.
+    aliases:
+      - smap
+      - msl
+      - smap_msl
+      - smap-msl
+
+  - id: loghub-hdfs
+    name: LogHub HDFS 2k Sample
+    category: log_analytics
+    description: Small HDFS log sample with parsed structured and template files from LogHub.
+    official_source: https://github.com/logpai/loghub
+    download_method: github_tree
+    download_url: https://github.com/logpai/loghub/tree/master/HDFS
+    destination: data/raw/loghub/hdfs
+    expected_files:
+      - HDFS_2k.log
+      - HDFS_2k.log_structured.csv
+      - HDFS_2k.log_templates.csv
+      - README.md
+    requires_manual_access: false
+    safe_default: true
+    large: false
+    license: Freely available for research or academic work; cite LogHub where applicable.
+    notes: Downloads the repository sample, not the multi-GB full HDFS release.
+    aliases:
+      - hdfs
+
+  - id: loghub-bgl
+    name: LogHub BGL 2k Sample
+    category: log_analytics
+    description: Small Blue Gene/L log sample with parsed structured and template files from LogHub.
+    official_source: https://github.com/logpai/loghub
+    download_method: github_tree
+    download_url: https://github.com/logpai/loghub/tree/master/BGL
+    destination: data/raw/loghub/bgl
+    expected_files:
+      - BGL_2k.log
+      - BGL_2k.log_structured.csv
+      - BGL_2k.log_templates.csv
+      - README.md
+    requires_manual_access: false
+    safe_default: true
+    large: false
+    license: Freely available for research or academic work; cite LogHub where applicable.
+    notes: Downloads the repository sample, not the larger BGL full release.
+    aliases:
+      - bgl
+
+  - id: loghub-openstack
+    name: LogHub OpenStack 2k Sample
+    category: log_analytics
+    description: Small OpenStack infrastructure log sample from LogHub.
+    official_source: https://github.com/logpai/loghub
+    download_method: github_tree
+    download_url: https://github.com/logpai/loghub/tree/master/OpenStack
+    destination: data/raw/loghub/openstack
+    expected_files:
+      - OpenStack_2k.log
+      - OpenStack_2k.log_structured.csv
+      - OpenStack_2k.log_templates.csv
+      - README.md
+    requires_manual_access: false
+    safe_default: true
+    large: false
+    license: Freely available for research or academic work; cite LogHub where applicable.
+    notes: Downloads the repository sample, not the larger full release.
+    aliases:
+      - openstack
+
+  - id: loghub-hadoop
+    name: LogHub Hadoop 2k Sample
+    category: log_analytics
+    description: Small Hadoop MapReduce job log sample from LogHub.
+    official_source: https://github.com/logpai/loghub
+    download_method: github_tree
+    download_url: https://github.com/logpai/loghub/tree/master/Hadoop
+    destination: data/raw/loghub/hadoop
+    expected_files:
+      - Hadoop_2k.log
+      - Hadoop_2k.log_structured.csv
+      - Hadoop_2k.log_templates.csv
+      - README.md
+    requires_manual_access: false
+    safe_default: true
+    large: false
+    license: Freely available for research or academic work; cite LogHub where applicable.
+    notes: Downloads the repository sample. Full dataset handling is intentionally deferred.
+    aliases:
+      - hadoop
+
+  - id: loghub-spark
+    name: LogHub Spark 2k Sample
+    category: log_analytics
+    description: Small Spark job log sample from LogHub.
+    official_source: https://github.com/logpai/loghub
+    download_method: github_tree
+    download_url: https://github.com/logpai/loghub/tree/master/Spark
+    destination: data/raw/loghub/spark
+    expected_files:
+      - Spark_2k.log
+      - Spark_2k.log_structured.csv
+      - Spark_2k.log_templates.csv
+      - README.md
+    requires_manual_access: false
+    safe_default: true
+    large: false
+    license: Freely available for research or academic work; cite LogHub where applicable.
+    notes: Downloads only the 2k sample because the full Spark release is multi-GB.
+    aliases:
+      - spark
+
+  - id: loghub-zookeeper
+    name: LogHub Zookeeper 2k Sample
+    category: log_analytics
+    description: Small ZooKeeper service log sample from LogHub.
+    official_source: https://github.com/logpai/loghub
+    download_method: github_tree
+    download_url: https://github.com/logpai/loghub/tree/master/Zookeeper
+    destination: data/raw/loghub/zookeeper
+    expected_files:
+      - Zookeeper_2k.log
+      - Zookeeper_2k.log_structured.csv
+      - Zookeeper_2k.log_templates.csv
+      - README.md
+    requires_manual_access: false
+    safe_default: true
+    large: false
+    license: Freely available for research or academic work; cite LogHub where applicable.
+    notes: Downloads the repository sample. Full dataset handling is intentionally deferred.
+    aliases:
+      - zookeeper
+      - zk
+
+  - id: opentelemetry-demo
+    name: OpenTelemetry Demo Reference Resources
+    category: observability_reference
+    description: Small public OpenTelemetry demo configuration and generator resources useful for future synthetic telemetry work.
+    official_source: https://github.com/openobserve/opentelemetry-demo-dataset
+    download_method: github_selected_files
+    download_url: https://github.com/openobserve/opentelemetry-demo-dataset
+    destination: data/raw/opentelemetry
+    expected_files:
+      - README.md
+      - src/log-generator/app.py
+      - src/otel-collector/otelcol-config.yml
+      - src/prometheus/prometheus-config.yaml
+    requires_manual_access: false
+    safe_default: true
+    large: false
+    license: Apache License 2.0 in the upstream repository.
+    notes: The inspected repository is a runnable demo, not a static telemetry benchmark. Only small reference files are downloaded by default.
+    aliases:
+      - opentelemetry
+      - otel
+
+  - id: metropt
+    name: MetroPT-3 Dataset
+    category: predictive_maintenance_time_series
+    description: Multivariate metro train compressor telemetry for predictive maintenance and anomaly explanation.
+    official_source: https://archive.ics.uci.edu/dataset/791/metropt%2B3%2Bdataset
+    download_method: direct_archive
+    download_url: https://archive.ics.uci.edu/static/public/791/metropt+3+dataset.zip
+    destination: data/raw/metropt
+    expected_files:
+      - MetroPT3(AirCompressor).csv
+      - Data Description_Metro.pdf
+    requires_manual_access: false
+    safe_default: true
+    large: false
+    license: Creative Commons Attribution 4.0 International (CC BY 4.0).
+    notes: Preserve the original CSV and official description file.
+    aliases:
+      - metropt-3
+      - metropt3
+
+  - id: ai4i
+    name: AI4I 2020 Predictive Maintenance Dataset
+    category: predictive_maintenance_classification
+    description: Synthetic industrial predictive-maintenance dataset from the UCI Machine Learning Repository.
+    official_source: https://archive.ics.uci.edu/dataset/601/ai4i%2B2020%2Bpredictive%2Bmaintenance%2Bdataset
+    download_method: direct_archive
+    download_url: https://archive.ics.uci.edu/static/public/601/ai4i+2020+predictive+maintenance+dataset.zip
+    destination: data/raw/ai4i
+    expected_files:
+      - ai4i2020.csv
+    requires_manual_access: false
+    safe_default: true
+    large: false
+    license: Creative Commons Attribution 4.0 International (CC BY 4.0).
+    notes: Preserve the UCI CSV and attribution metadata.
+    aliases:
+      - ai4i-2020
+
+  - id: swat
+    name: Secure Water Treatment
+    category: industrial_control_system_anomaly_detection
+    description: Industrial water-treatment testbed dataset from iTrust.
+    official_source: https://www.sutd.edu.sg/itrust/itrust-labs/datasets/
+    download_method: manual_access_request
+    download_url:
+    destination: data/raw/swat
+    expected_files:
+      - README.md
+    requires_manual_access: true
+    safe_default: false
+    large: true
+    license: To verify during access request.
+    notes: Requires requesting access from iTrust. Do not bypass the access process.
+    aliases:
+      - swat-dataset
+
+  - id: wadi
+    name: Water Distribution
+    category: industrial_control_system_anomaly_detection
+    description: Industrial water-distribution testbed dataset from iTrust.
+    official_source: https://www.sutd.edu.sg/itrust/itrust-labs/datasets/
+    download_method: manual_access_request
+    download_url:
+    destination: data/raw/wadi
+    expected_files:
+      - README.md
+    requires_manual_access: true
+    safe_default: false
+    large: true
+    license: To verify during access request.
+    notes: Requires requesting access from iTrust. Do not bypass the access process.
+    aliases:
+      - wadi-dataset
+
+  - id: cicids2017
+    name: CIC-IDS2017
+    category: cybersecurity_intrusion_detection
+    description: Intrusion detection dataset with PCAPs and labeled flow CSVs from the Canadian Institute for Cybersecurity.
+    official_source: https://www.unb.ca/cic/datasets/ids-2017.html
+    download_method: manual_official_download
+    download_url:
+    destination: data/raw/cicids2017
+    expected_files:
+      - README.md
+    requires_manual_access: true
+    safe_default: false
+    large: true
+    license: Publicly available for researchers; cite the CIC-IDS2017 paper. Confirm current terms on the official site.
+    notes: Use the official download process. Do not invent or rely on unofficial direct links.
+    aliases:
+      - cic-ids2017
+      - ids2017

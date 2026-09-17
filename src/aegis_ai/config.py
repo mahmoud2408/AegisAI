@@ -11,7 +11,7 @@ VectorStoreName = Literal["qdrant", "faiss"]
 LlmProviderName = Literal["ollama", "openai_compatible", "none"]
 
 
-class Settings(BaseSettings):
+class Settings(BaseSettings):  # type: ignore[misc]
     """Runtime configuration shared across API, workers, and pipelines."""
 
     model_config = SettingsConfigDict(

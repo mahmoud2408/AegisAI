@@ -1,6 +1,17 @@
 # Model Card
 
-Phase status: no trained model has been registered.
+Phase status: experimental forecasting baselines exist, but no model has been registered for production inference.
+
+Experimental model cards:
+
+- `docs/models/isolation_forest_nab.md`
+- `docs/models/autoencoder_nab.md`
+- `docs/models/lstm_autoencoder_nab.md`
+- `docs/models/smd_isolation_forest.md`
+- `docs/models/smd_autoencoder.md`
+- `docs/models/smd_lstm_autoencoder.md`
+- `docs/models/failure_prediction.md`
+- `docs/models/forecasting_baselines.md`
 
 This document is a template for future registered models.
 

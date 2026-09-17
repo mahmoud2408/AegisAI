@@ -1,0 +1,60 @@
+# Phase 8: MetroPT-3 time-series forecasting.
+
+random_seed: 42
+
+# Raw cadence is near 10 seconds. Phase 8 resamples continuous sensors to a
+# regular one-minute grid so 5/15/30 minute horizons map to exact row offsets.
+resample_frequency: 1min
+
+# Compact continuous sensor set chosen from the Phase 8 data audit. Binary state
+# variables are audited but not forecast with continuous regression methods.
+selected_sensors:
+  - TP2
+  - TP3
+  - H1
+  - Reservoirs
+  - Oil_temperature
+  - Motor_current
+
+horizons_minutes:
+  - 5
+  - 15
+  - 30
+
+# Reuse the event-aware chronology from Phase 7B so later risk analysis can be
+# compared against the same held-out July period without using failure labels as
+# forecasting targets.
+train_end: "2020-05-31 00:00:00"
+validation_end: "2020-06-08 00:00:00"
+
+window_stride: 5
+moving_average_window_steps: 15
+statistical_window_steps: 30
+ridge_lag_steps: 30
+
+normal_quantile_low: 0.01
+normal_quantile_high: 0.99
+normal_z_threshold: 3.0
+mape_min_abs_value: 0.1
+small_gap_interpolate_limit: 2
+max_gap_multiplier: 1.5
+max_saved_prediction_rows_per_model: 3000
+
+lstm:
+  enabled: true
+  sequence_length: 60
+  hidden_size: 32
+  num_layers: 1
+  dropout: 0.0
+  learning_rate: 0.001
+  batch_size: 256
+  epochs: 5
+  patience: 2
+  max_train_windows: 12000
+  max_validation_windows: 4000
+  device: cpu
+
+# Transformer note:
+# A lightweight Transformer is intentionally excluded in Phase 8. The project
+# first needs measured lower-complexity baselines and LSTM diagnostics before a
+# higher-compute architecture is justified.

@@ -1,0 +1,57 @@
+# Phase 7: supervised failure prediction and predictive maintenance.
+
+random_seed: 42
+
+ai4i:
+  train_fraction: 0.7
+  validation_fraction: 0.15
+  threshold_grid:
+    - 0.1
+    - 0.2
+    - 0.3
+    - 0.5
+    - 0.7
+
+metropt:
+  # Six hours gives enough pre-failure samples at the local near-10-second cadence
+  # while staying tied to operational early-warning, not active failure detection.
+  horizon_hours: 6.0
+  # Evaluate prediction opportunities roughly once per minute to reduce adjacent
+  # autocorrelation from the near-10-second raw cadence.
+  prediction_stride_rows: 6
+  # Event-aware chronological split:
+  # train sees failures #1 and #2, validation sees #3, test sees #4.
+  train_end: "2020-05-31 00:00:00"
+  validation_end: "2020-06-08 00:00:00"
+  lag_steps:
+    - 1
+    - 6
+    - 60
+  rolling_windows:
+    - 5min
+    - 30min
+  trend_window: 30min
+  min_periods: 3
+  max_train_rows: 60000
+  negative_to_positive_ratio: 25
+  threshold_grid:
+    - 0.1
+    - 0.2
+    - 0.3
+    - 0.5
+    - 0.7
+
+models:
+  random_seed: 42
+  logistic_max_iter: 1000
+  random_forest_estimators: 200
+  random_forest_min_samples_leaf: 3
+  xgboost_estimators: 200
+  xgboost_max_depth: 4
+  xgboost_learning_rate: 0.05
+  n_jobs: -1
+
+shap:
+  enabled: true
+  sample_rows: 200
+  local_explanation_rows: 5

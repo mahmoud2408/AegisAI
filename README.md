@@ -2,7 +2,7 @@
 
 Autonomous AI platform for predictive incident detection and investigation.
 
-This repository is being built as a production-oriented AI engineering portfolio project. The current state is **Phase 1: repository architecture**. It intentionally contains architecture, package boundaries, dependency manifests, configuration contracts, and documentation scaffolding only. Data ingestion, model training, API endpoints, RAG, agents, monitoring dashboards, Docker Compose, and CI/CD will be added in later milestones.
+This repository is being built as a production-oriented AI engineering portfolio project. The current state is **Phase 8 MetroPT time-series forecasting**. It contains the architecture and data layer from earlier phases plus measured NAB/SMD anomaly-detection experiments, AI4I/MetroPT failure-prediction baselines, a MetroPT robustness audit, and MetroPT forecasting baselines. API endpoints, RAG, agents, monitoring dashboards, Docker Compose, and CI/CD remain later milestones.
 
 ## Objective
 
@@ -117,6 +117,82 @@ Python dependencies are declared in [pyproject.toml](pyproject.toml).
 
 Frontend dependencies are declared in [frontend/package.json](frontend/package.json).
 
+## Data Layer
+
+Phase 2 adds canonical dataset adapters and generated Parquet outputs for the local datasets available on this machine. Generated raw data, processed data, profiles, and lineage manifests are intentionally ignored by Git.
+
+Core commands:
+
+```powershell
+python scripts/data/profile_all.py
+python scripts/data/preprocess_all.py --batch-size 25000
+python scripts/data/validate_processed.py
+```
+
+Measured local preprocessing outputs from the latest Phase 2 run:
+
+| Dataset | Status | Output |
+| --- | --- | --- |
+| NAB | READY | 365,558 metrics; 236 labels |
+| SMD | READY | 53,839,350 metrics; 708,747 labels |
+| MetroPT-3 | READY | 22,754,220 metrics |
+| AI4I | READY | 50,000 metrics; 10,000 failures; 60,000 labels |
+| SMAP | LABELS_ONLY | 69 labels |
+| MSL | LABELS_ONLY | 36 labels |
+| LogHub OpenStack | READY | 2,000 logs |
+
+These are row counts from preprocessing validation, not model-performance results.
+
+Data docs:
+
+- [docs/data_pipeline.md](docs/data_pipeline.md)
+- [docs/dataset_adapters.md](docs/dataset_adapters.md)
+- [docs/data_quality.md](docs/data_quality.md)
+- [docs/data_splits.md](docs/data_splits.md)
+- [docs/data_model.md](docs/data_model.md)
+
+## Datasets
+
+Dataset downloads are configured in [config/datasets.yaml](config/datasets.yaml). Raw datasets are ignored by Git and should live under `data/raw`.
+
+| Dataset | Purpose | Status | Access |
+| --- | --- | --- | --- |
+| NAB | Univariate streaming anomaly detection | SCRIPTED | Public GitHub |
+| SMD | Multivariate server anomaly detection | SCRIPTED | Public GitHub |
+| SMAP/MSL | Spacecraft telemetry anomaly detection | SCRIPTED, source availability checked at runtime | Public Telemanom URLs |
+| LogHub HDFS/BGL/OpenStack/Hadoop/Spark/Zookeeper | Log parsing and log-derived anomaly signals | SCRIPTED, small samples by default | Public GitHub |
+| OpenTelemetry demo resources | Observability reference data and future telemetry generation | SCRIPTED_REFERENCE | Public GitHub |
+| MetroPT-3 | Predictive maintenance and anomaly explanation | SCRIPTED | Public UCI |
+| AI4I 2020 | Failure prediction and XAI practice | SCRIPTED | Public UCI |
+| SWaT | Industrial-control anomaly detection | MANUAL | iTrust access request |
+| WADI | Industrial-control anomaly detection | MANUAL | iTrust access request |
+| CIC-IDS2017 | Cybersecurity anomaly detection | MANUAL | Official CIC download |
+
+Dataset commands:
+
+```powershell
+python scripts/datasets/download_all.py --list
+python scripts/datasets/download_all.py --dataset public
+python scripts/datasets/download_all.py --dataset nab
+python scripts/datasets/download_all.py --dataset loghub
+python scripts/datasets/download_all.py --dataset loghub --large
+python scripts/datasets/validate_datasets.py
+```
+
+The downloader writes `data/manifests/datasets_manifest.json` after each attempted dataset. That manifest is ignored by Git because it describes local data files.
+
+Audit and strategy docs:
+
+- [docs/dataset_audit.md](docs/dataset_audit.md)
+- [docs/data_strategy.md](docs/data_strategy.md)
+- [docs/data_model.md](docs/data_model.md)
+- [docs/data_pipeline.md](docs/data_pipeline.md)
+- [docs/dataset_adapters.md](docs/dataset_adapters.md)
+- [docs/data_quality.md](docs/data_quality.md)
+- [docs/data_splits.md](docs/data_splits.md)
+- [docs/experimental_plan.md](docs/experimental_plan.md)
+- [docs/roadmap.md](docs/roadmap.md)
+
 ## Environment Variables
 
 The initial environment contract is documented in [.env.example](.env.example). Important groups:
@@ -130,9 +206,9 @@ The initial environment contract is documented in [.env.example](.env.example). 
 
 Do not commit real secrets. Use `.env` locally.
 
-## First Milestone
+## Current Milestone
 
-Phase 1 establishes a clean repository contract:
+Completed foundations:
 
 - Source package boundaries
 - Dependency manifests
@@ -140,8 +216,41 @@ Phase 1 establishes a clean repository contract:
 - Dataset storage policy
 - Required documentation skeleton
 - Basic scaffold tests
+- Canonical Pydantic models and PyArrow schemas
+- Dataset adapters for ready datasets and labels-only SMAP/MSL handling
+- Streaming preprocessing into partitioned Parquet
+- Profiles, lineage manifests, and processed-output validation
+- NAB statistical, Isolation Forest, dense autoencoder, and LSTM autoencoder experiments
+- NAB robustness/error analysis and SMD transition planning
+- SMD multivariate anomaly detection across 28 machines
+- AI4I supervised failure prediction and MetroPT event-derived predictive-maintenance baselines
+- MetroPT robustness/target validation with event-level evaluation, threshold sensitivity, false-alarm analysis, July holdout analysis, distribution-shift diagnostics, and SHAP feature contribution artifacts
+- MetroPT one-minute telemetry forecasting with persistence, moving average, rolling linear trend, ridge autoregression, univariate LSTM, multivariate LSTM, and forecast-based degradation/risk analysis
 
-No performance claims are made because no experiments have been run.
+Latest measured Phase 7 run: `experiments/prediction/failure_prediction/phase7_failure_prediction_20260912`.
+
+- AI4I best test F1: Random Forest with F1 `0.6327`, precision `0.6596`, recall `0.6078`, ROC-AUC `0.9674`, and PR-AUC `0.6757`.
+- MetroPT result: no deployable winner; all classical baselines missed the held-out July failure under validation-selected thresholds. XGBoost had F1 `0.0000`, recall `0.0000`, PR-AUC `0.0035`, and FPR `0.0126`.
+
+Latest measured Phase 7B run: `experiments/prediction/metropt_robustness/phase7b_metropt_robustness_20260914`.
+
+- MetroPT labels: four report-curated air-leak events, one held-out July test failure, and no overlapping failure intervals.
+- Best validation-selected candidate: 6-hour Random Forest at threshold `0.005`.
+- Validation: F1 `0.1193`, PR-AUC `0.0567`, event detection `1.0000`, median lead time `5.9517` hours.
+- Test: precision `0.0000`, recall `0.0000`, F1 `0.0000`, PR-AUC `0.0036`, event detection `0.0000`, false-positive rate `0.4376`, and `377.2708` false alarms per day.
+- Conclusion: Decision **B**. MetroPT remains useful for forecasting, anomaly explanation, robustness, and future RCA evidence, but the current supervised early-warning classifier is not deployable.
+
+Latest measured Phase 8 run: `experiments/forecasting/metropt/phase8_metropt_forecasting_20260915`.
+
+- Forecast cadence: one-minute resample from raw median cadence `10.0` seconds.
+- Selected sensors: `TP2`, `TP3`, `H1`, `Reservoirs`, `Oil_temperature`, and `Motor_current`.
+- Horizons: 5, 15, and 30 minutes.
+- Validation-selected global model: 5-minute multivariate LSTM.
+- Test result for validation-selected model: MAE `1.2845`, RMSE `2.1687`, MAPE `10.6241`.
+- Longer horizon winners: moving average at 15 minutes and 30 minutes.
+- Forecast-based risk signal: mean precision `0.3296`, mean recall `0.0698`, mean F1 `0.1030`; useful as evidence, not as a standalone failure classifier.
+
+See [docs/experiments/ai4i_failure_prediction.md](docs/experiments/ai4i_failure_prediction.md), [docs/experiments/metropt_failure_prediction.md](docs/experiments/metropt_failure_prediction.md), [docs/experiments/lead_time_analysis.md](docs/experiments/lead_time_analysis.md), [docs/experiments/metropt_failure_events.md](docs/experiments/metropt_failure_events.md), [docs/experiments/metropt_target_analysis.md](docs/experiments/metropt_target_analysis.md), [docs/experiments/metropt_robustness.md](docs/experiments/metropt_robustness.md), [docs/experiments/metropt_forecasting.md](docs/experiments/metropt_forecasting.md), [docs/experiments/forecast_risk_signal.md](docs/experiments/forecast_risk_signal.md), and [docs/models/forecasting_baselines.md](docs/models/forecasting_baselines.md).
 
 ## Known Risks
 
@@ -173,4 +282,28 @@ npm run typecheck
 npm test
 ```
 
-Phase-specific commands will be added as features are implemented.
+Additional phase-specific commands will be added as later features are implemented.
+
+Run the Phase 6 SMD multivariate experiment:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\experiments\run_smd_multivariate.py --run-id phase6_smd_multivariate_20260911_eps1e3
+```
+
+Run the Phase 7 failure-prediction experiment:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\experiments\run_failure_prediction.py --run-id phase7_failure_prediction_20260912
+```
+
+Run the Phase 7B MetroPT robustness experiment:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\experiments\run_metropt_robustness.py --run-id phase7b_metropt_robustness_20260914
+```
+
+Run the Phase 8 MetroPT forecasting experiment:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\experiments\run_metropt_forecasting.py --run-id phase8_metropt_forecasting_20260915
+```

@@ -1,1 +1,41 @@
 """Root-cause analysis engines and evidence aggregation."""
+
+from aegis_ai.rca.engine import (
+    IncidentCandidate,
+    IncidentWindow,
+    IncidentWindowDetectionResult,
+    RCAExperimentResult,
+    RCAScoringConfig,
+    RootCauseCandidate,
+    build_evidence_mapping,
+    build_incident_reports,
+    build_incident_timeline_frame,
+    detect_incident_windows,
+    deterministic_incident_summary,
+    evaluate_rca_outputs,
+    load_rca_scoring_config,
+    merge_incident_windows,
+    rank_root_cause_candidates,
+    run_rca_experiment,
+    select_rca_case_studies,
+)
+
+__all__ = [
+    "IncidentCandidate",
+    "IncidentWindow",
+    "IncidentWindowDetectionResult",
+    "RCAExperimentResult",
+    "RCAScoringConfig",
+    "RootCauseCandidate",
+    "build_evidence_mapping",
+    "build_incident_reports",
+    "build_incident_timeline_frame",
+    "detect_incident_windows",
+    "deterministic_incident_summary",
+    "evaluate_rca_outputs",
+    "load_rca_scoring_config",
+    "merge_incident_windows",
+    "rank_root_cause_candidates",
+    "run_rca_experiment",
+    "select_rca_case_studies",
+]

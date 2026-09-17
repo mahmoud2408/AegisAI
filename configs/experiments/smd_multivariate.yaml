@@ -1,0 +1,60 @@
+# Phase 6: SMD multivariate anomaly detection.
+# This config evaluates all SMD machines by default. Use the CLI --max-machines
+# option for quick debugging runs.
+
+train_fraction: 0.8
+window_size: 64
+stride: 1
+metric_count: 38
+scaler_epsilon: 0.001
+threshold_percentile: 99.0
+threshold_strategies:
+  - train_percentile
+  - validation_percentile
+max_machines:
+train_row_limit: 12000
+train_window_limit: 4096
+top_k_metrics: 5
+max_top_metric_rows_per_outcome: 200
+max_visualized_machines: 6
+random_seed: 42
+
+isolation_forest_config:
+  n_estimators: 100
+  max_samples: auto
+  contamination: auto
+  random_state: 42
+  n_jobs: -1
+
+dense_autoencoder_config:
+  hidden_dims:
+    - 128
+    - 64
+  latent_dim: 16
+  learning_rate: 0.001
+  batch_size: 256
+  epochs: 1
+  patience: 1
+  min_delta: 0.00001
+  random_seed: 42
+  device: cpu
+
+lstm_autoencoder_config:
+  hidden_size: 32
+  num_layers: 1
+  dropout: 0.0
+  learning_rate: 0.001
+  batch_size: 256
+  epochs: 1
+  patience: 1
+  min_delta: 0.00001
+  random_seed: 42
+  device: cpu
+
+window_sensitivity:
+  enabled: true
+  max_machines: 2
+  window_sizes:
+    - 32
+    - 64
+  epochs: 1
