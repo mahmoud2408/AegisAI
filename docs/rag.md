@@ -1,10 +1,10 @@
 # RAG
 
-Phase status: design proposal only.
+Phase status: Phase 11 retrieval foundation implemented.
 
 ## Pipeline
 
-The RAG subsystem will:
+The RAG subsystem now:
 
 1. Load documents.
 2. Extract text.
@@ -14,7 +14,9 @@ The RAG subsystem will:
 6. Store embeddings and metadata.
 7. Retrieve relevant chunks.
 8. Optionally rerank results.
-9. Generate grounded answers with citations.
+9. Evaluates retrieval quality and citation completeness.
+
+Generation is intentionally not implemented in Phase 11.
 
 ## Metadata Contract
 
@@ -31,12 +33,30 @@ Each chunk should store:
 
 ## Retrieval Evaluation
 
-Planned metrics:
+Implemented metrics:
 
-- Recall@k
+- Precision@K
+- Recall@K
 - MRR
-- Citation precision
-- Citation coverage
-- Grounded answer rate
+- nDCG@K
+- retrieval latency
+- retrieved document count
+- citation completeness
 
-Generated answers must reference retrieved chunks. If retrieval fails, the system should say that it lacks supporting documentation instead of inventing a citation.
+Measured run:
+
+```text
+experiments/rag/phase11_rag_knowledge_20260922
+```
+
+Best configuration: `dense_rerank`.
+
+Detailed docs:
+
+- `docs/rag_architecture.md`
+- `docs/document_ingestion.md`
+- `docs/chunking.md`
+- `docs/embedding_strategy.md`
+- `docs/retrieval.md`
+- `docs/retrieval_evaluation.md`
+- `docs/knowledge_packs.md`

@@ -341,3 +341,37 @@ Detailed write-ups:
 - `docs/log_anomaly_detection.md`
 - `docs/log_evidence.md`
 - `docs/experiments/log_intelligence.md`
+
+### RAG / Knowledge Intelligence Foundation
+
+| Field | Value |
+| --- | --- |
+| Experiment ID | `phase11_rag_knowledge_20260922` |
+| Date | 2026-09-22 |
+| Knowledge sources | Project-generated and synthetic local documents under `knowledge/` |
+| Documents | 9 |
+| Chunks | 28 |
+| Embedding model | `local_hashing_embedding` v1.0, 384 dimensions |
+| Vector store | `local_json` |
+| Metrics artifact | `experiments/rag/phase11_rag_knowledge_20260922/metrics.json` |
+| Reproduction command | `.\.venv\Scripts\python.exe scripts\rag\evaluate_retrieval.py` |
+| Notes | No generative LLM, no agent, no official-document claims. |
+
+Measured retrieval results:
+
+| Configuration | Precision@K | Recall@K | MRR | nDCG@K | Mean latency ms | Citation completeness |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `dense` | 0.2000 | 1.0000 | 0.9722 | 0.9795 | 1.9606 | 1.0000 |
+| `dense_rerank` | 0.2000 | 1.0000 | 1.0000 | 1.0000 | 2.1500 | 1.0000 |
+
+Best justified configuration: `dense_rerank`. The benchmark is intentionally small and should not be generalized beyond the current local knowledge pack.
+
+Detailed write-ups:
+
+- `docs/rag_architecture.md`
+- `docs/document_ingestion.md`
+- `docs/chunking.md`
+- `docs/embedding_strategy.md`
+- `docs/retrieval.md`
+- `docs/retrieval_evaluation.md`
+- `docs/knowledge_packs.md`

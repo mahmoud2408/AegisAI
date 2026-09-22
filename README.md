@@ -2,7 +2,7 @@
 
 Autonomous AI platform for predictive incident detection and investigation.
 
-This repository is being built as a production-oriented AI engineering portfolio project. The current state is **Phase 10 deterministic log intelligence and log evidence**. It contains the architecture and data layer from earlier phases plus measured NAB/SMD anomaly-detection experiments, AI4I/MetroPT failure-prediction baselines, a MetroPT robustness audit, MetroPT forecasting baselines, deterministic evidence/risk aggregation, root-cause candidate ranking, and LogHub log-evidence generation. API endpoints, RAG, agents, monitoring dashboards, Docker Compose, and CI/CD remain later milestones.
+This repository is being built as a production-oriented AI engineering portfolio project. The current state is **Phase 11 RAG / knowledge intelligence foundation**. It contains the architecture and data layer from earlier phases plus measured NAB/SMD anomaly-detection experiments, AI4I/MetroPT failure-prediction baselines, a MetroPT robustness audit, MetroPT forecasting baselines, deterministic evidence/risk aggregation, root-cause candidate ranking, LogHub log-evidence generation, and citation-aware retrieval evaluation. API endpoints, LLM agents, monitoring dashboards, Docker Compose, and CI/CD remain later milestones.
 
 ## Objective
 
@@ -42,7 +42,7 @@ Major boundaries:
 - `src/aegis_ai/logs`: deterministic structured-log profiling, anomaly signals, and log evidence
 - `src/aegis_ai/decision`: incident severity, risk scoring, and decision policies
 - `src/aegis_ai/rca`: deterministic and model-assisted root-cause analysis
-- `src/aegis_ai/rag`: document ingestion, chunking, embeddings, retrieval, reranking, citations, and evaluation
+- `src/aegis_ai/rag`: document ingestion, chunking, embeddings, vector storage, retrieval, reranking, citations, and evaluation
 - `src/aegis_ai/agents`: investigation tools, orchestration, validation, retries, timeouts, and report schemas
 - `src/aegis_ai/api`: versioned FastAPI routes and WebSocket alert streams
 - `src/aegis_ai/db`: SQLAlchemy models, repositories, and migrations

@@ -1,0 +1,29 @@
+---
+document_id: linux_resource_pressure
+title: Linux Resource Pressure Investigation Notes
+source: project-generated
+source_url:
+version: "2026-09-22"
+domain: operating_system
+technology: linux
+language: en
+provenance: project-generated synthetic operational note
+---
+
+Linux Resource Pressure Investigation Notes
+
+Scope
+
+This project-generated note describes deterministic checks for CPU saturation, memory pressure, and disk pressure. It is not distribution-specific vendor documentation.
+
+CPU pressure
+
+Check load average, runnable process count, CPU steal, and per-process CPU usage. A CPU overload investigation should compare user CPU, system CPU, iowait, and throttling. Sustained high iowait may indicate storage pressure rather than pure compute saturation.
+
+Memory pressure
+
+Check available memory, swap activity, oom-killer messages, major page faults, and process resident memory growth. A memory leak suspicion needs a time trend, not one high memory sample.
+
+Disk pressure
+
+Check filesystem capacity, inode usage, disk latency, and kernel I/O errors. Disk saturation can present as service latency even when CPU is not high.

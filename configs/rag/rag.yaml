@@ -1,0 +1,38 @@
+# Phase 11 RAG / knowledge intelligence configuration.
+
+knowledge_dir: knowledge
+artifact_root: experiments/rag
+run_id: phase11_rag_knowledge_20260922
+eval_dataset_path: knowledge/retrieval_eval.jsonl
+
+supported_extensions:
+  - .md
+  - .txt
+  - .html
+  - .htm
+  - .pdf
+
+default_language: en
+
+chunk_size_tokens: 120
+chunk_overlap_tokens: 24
+chunk_separators:
+  - "\n\n"
+  - "\n"
+  - ". "
+
+# Local deterministic embedding baseline. This does not call external APIs.
+embedding_model_name: local_hashing_embedding
+embedding_model_version: "1.0"
+embedding_dimensions: 384
+
+# Local persisted vector store for reproducible experiments. Qdrant remains
+# the production-oriented future backend once infrastructure is introduced.
+vector_store_backend: local_json
+
+top_k: 5
+score_threshold: 0.0
+rerank_top_k: 10
+retrieval_configurations:
+  - dense
+  - dense_rerank
